@@ -39,19 +39,37 @@ const Header = () => {
                                     <li className="nav-item">
                                         <NavLink to="/login" className="nav-link" href="#">Login</NavLink>
                                     </li></>) : (<>
-                                        <div className="dropdown">
-                                            <NavLink className="nav-link dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+                                        <li className="nav-item dropdown">
+                                            <NavLink
+                                                className="nav-link dropdown-toggle"
+                                                href="#"
+                                                role="button"
+                                                data-bs-toggle="dropdown"
+                                                aria-expanded="false"
+                                            >
                                                 {auth?.user?.name}
                                             </NavLink>
                                             <ul className="dropdown-menu">
-                                                <li><NavLink to="/dashboard" className="dropdown-item" >Dashboard</NavLink></li>
-                                                <li className="dropdown-item">
-                                                    <NavLink onClick={handleLogout} to="/login" className="nav-link" >Logout</NavLink>
+                                                <li>
+                                                    <NavLink to="/dashboard" className="dropdown-item">
+                                                        Dashboard
+                                                    </NavLink>
+                                                </li>
+                                                <li>
+                                                    <NavLink
+                                                        onClick={handleLogout}
+                                                        to="/login"
+                                                        className="dropdown-item"
+                                                    >
+                                                        Logout
+                                                    </NavLink>
                                                 </li>
                                             </ul>
-                                        </div>
+                                        </li>
+                                    </>
 
-                                    </>)
+                                )
                             }
                             <li className="nav-item">
                                 <NavLink to="/cart" className="nav-link" href="#">Cart(0)</NavLink>
