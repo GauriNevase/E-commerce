@@ -4,7 +4,7 @@ import JWT from "jsonwebtoken";
 
 export const registerController = async (req, res) => {
   try {
-    const { name, email, password, phone, address } = req.body;
+    const { name, email, password, phone, address,answer } = req.body;
     //validations
     if (!name) {
       return res.send({ error: "Name is Required" });
@@ -20,6 +20,9 @@ export const registerController = async (req, res) => {
     }
     if (!address) {
       return res.send({ message: "Address is Required" });
+    }
+    if (!answer) {
+      return res.send({ message: "Answer is Required" });
     }
     //check user
     const exisitingUser = await userModel.findOne({ email });
@@ -39,6 +42,7 @@ export const registerController = async (req, res) => {
       phone,
       address,
       password: hashedPassword,
+      answer,
     }).save();
 
     res.status(201).send({
@@ -107,6 +111,47 @@ export const loginController = async (req, res) => {
     });
   }
 };
+
+//forgot password controller
+
+export const forgotPasswordController=async(req,res)=>{
+  try {
+    const {email,answer,newpassword}=req.body
+    if(!email){
+      res.status(400).send({message:'Email is required'})
+    }
+    if(!answer){
+      res.status(400).send({message:'Answer is required'})
+    }
+    if(!newpassword){
+      res.status(400).send({message:'Newpassword is required'})
+    }
+
+    //check
+    const user=await userModel.findOne({email,answer})
+    //validation
+    if(!user){
+      return res.status(404).send({
+        success:false,
+        message:'Wrong email or answer'
+      })
+    }
+    const hashed=await hashPassword(newpassword)
+    await userModel.findByIdAndUpdate(user._id,{password:hashed});
+    res.status(200).send({
+      success:true,
+      message:"Password reset sucessfully",
+    });
+  } catch (error) {
+    console.log(error)
+    res.status(500).send({
+      success:false,
+      message:"Something went wrong",
+      error
+    })
+  }
+};
+
 
 //test controller
 export const testController = (req, res) => {
