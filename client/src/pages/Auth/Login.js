@@ -10,32 +10,29 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-    const location = useLocation();
     const [auth, setAuth] = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/login`, {
+            const response = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/login`, {
                 email,
                 password,
             });
 
-            const { success, message } = res.data;
+            const { success, message } = response.data;
 
             if (success) {
                 toast.success(message);
                 setAuth({
                     ...auth,
-                    user: res.data.user,
-                    token: res.data.token,
+                    user: response.data.user,
+                    token: response.data.token,
                 });
-                localStorage.setItem('auth', JSON.stringify(res.data));
-                navigate(
-                    location.state ?.from
-                    ||
-                     '/'); // Navigate to the home page upon successful login
+                
+                // Redirect to the dashboard based on the user's role
+                navigate(`/dashboard/${response.data.user.role === 1 ? 'admin' : 'user'}`);
             } else {
                 toast.error(message);
             }
@@ -44,6 +41,7 @@ const Login = () => {
             toast.error('Something went wrong');
         }
     };
+    //backend ends
 
     return (
         <Layout title={"Login-Ecommerce"}>
