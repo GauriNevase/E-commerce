@@ -56,11 +56,13 @@ import Pagenotfound from "./pages/Pagenotfound";
 import Register from "./pages/Auth/Register";
 import Login from "./pages/Auth/Login";
 import Dashboard from "./pages/user/Dashboard";
+import ForgotPassword from "./pages/Auth/ForgotPassword";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import CreateCategory from "./pages/Admin/CreateCategory";
 import CreateProduct from "./pages/Admin/CreateProduct";
 import Users from "./pages/Admin/Users";
-import ForgotPassword from "./pages/Auth/ForgotPassword";
+import Orders from "./pages/user/Orders";
+import Profile from "./pages/user/Profile";
 
 function App() {
   return (
@@ -68,6 +70,8 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/dashboard/user" element={<Dashboard />} />
+        <Route path="dashboard/user/orders" element={<Orders />} />
+        <Route path="dashboard/user/profile" element={<Profile />} />
         <Route path="/dashboard/admin" element={<AdminDashboard />} />
         <Route path="/dashboard/admin/create-category" element={<CreateCategory />} />
         <Route path="/dashboard/admin/create-product" element={<CreateProduct />} />
