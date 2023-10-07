@@ -59,7 +59,6 @@ const UpdateProduct = () => {
     getAllCategory();
   }, []);
 
-  //create product function
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
@@ -70,12 +69,21 @@ const UpdateProduct = () => {
       productData.append("quantity", quantity);
       photo && productData.append("photo", photo);
       productData.append("category", category);
-      const { data } = axios.put(
+  
+      // Use the `data` option to send the `productData` as the request body
+      const { data } = await axios.put(
         `${process.env.REACT_APP_API}/api/v1/product/update-product/${id}`,
-        productData
+        productData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", // Set the content type to 'multipart/form-data'
+          },
+        }
       );
+  
       if (data?.success) {
         toast.error(data?.message);
+        navigate("/dashboard/admin/products");
       } else {
         toast.success("Product Updated Successfully");
         navigate("/dashboard/admin/products");
@@ -85,6 +93,7 @@ const UpdateProduct = () => {
       toast.error("something went wrong");
     }
   };
+  
 
   //delete a product
   const handleDelete = async () => {

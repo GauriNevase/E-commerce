@@ -48,13 +48,14 @@ const CreateProduct = () => {
       productData.append("category", category);
       const { data } =await  axios.post(
         `${process.env.REACT_APP_API}/api/v1/product/create-product`,
-        productData
+        productData,
       );
       if (data?.success) {
-        toast.error(data?.message);
+        toast.error("Success");
+        navigate("/dashboard/admin/products");
       } else {
-        toast.success("Product Created Successfully");
-        navigate("/dashboard/admin/product");
+        toast.success("Issue in creating a product");
+        navigate("/dashboard/admin/products");
       }
     } catch (error) {
       console.log(error);
