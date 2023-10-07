@@ -8,6 +8,9 @@ import categoryRoutes from "./routes/categoryRoutes.js";
 import productRoute from "./routes/productRoute.js";
 import cors from "cors";
 
+
+
+
 //configure env
 dotenv.config();
 
@@ -26,6 +29,11 @@ app.use(morgan("dev"));
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/category", categoryRoutes);
 app.use("/api/v1/product",productRoute);
+
+
+// Serve static files from a directory (where your images are stored)
+// app.use('/api/v1/product/product-photo', express.static('path/to/image/directory'));
+
 
 //rest api
 app.get("/", (req, res) => {
