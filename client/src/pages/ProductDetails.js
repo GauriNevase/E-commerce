@@ -24,6 +24,8 @@ const ProductDetails = () => {
       console.log(error);
     }
   };
+
+
   //get similar product
   const getSimilarProduct = async (pid, cid) => {
     try {
@@ -35,6 +37,8 @@ const ProductDetails = () => {
       console.log(error);
     }
   };
+
+
   return (
     <Layout>
       <div className="row container mt-2">
@@ -76,7 +80,7 @@ const ProductDetails = () => {
                 <p className="card-text"> $ {p.price}</p>
                 <button
                   className="btn btn-primary ms-1"
-                  onClick={() => navigate(`${process.env.REACT_APP_API}/product/${p.slug}`)}
+                  onClick={() => navigate(`/product/${p.slug}`)}
                 >
                   More Details
                 </button>
