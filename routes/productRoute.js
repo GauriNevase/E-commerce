@@ -8,6 +8,7 @@ import {
   productFilterController,
   productListController,
   productPhotoController,
+  searchProductController,
   updateProductController,
 } from "../controllers/productController.js";
 import { isAdmin, requireSignIn } from "../middlewares/authMiddleware.js";
@@ -54,6 +55,6 @@ router.get('/product-count',productCountController);
 router.get('/product-list/:page',productListController);
 
 //product search
-router.get('/search',searchProductController);
+router.get('/search/:keyword',searchProductController);
 
 export default router;

@@ -245,4 +245,22 @@ export const productListController = async (req, res) => {
 };
 
 //search product controller
-// export const searchProductController=await
+export const searchProductController=async(req,res)=>{
+  try {
+    const{keyword}=req.params
+    const result = await productModel.find({
+      $or:[
+        {name:{$regex:keyword, $options:"i"}},
+        {description:{$regex:keyword, $options:"i"}},
+      ]
+    }).select("-photo")
+    res.json(result);
+  } catch (error) {
+    console.error(error); 
+    res.status(400).send({
+      message: "Error in search product api",
+      error,
+      success: false,
+    });
+  }
+}

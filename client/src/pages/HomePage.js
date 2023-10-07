@@ -3,6 +3,7 @@ import Layout from '../components/Layout/Layout';
 import axios from 'axios';
 import { Button, Checkbox, Radio } from 'antd';
 import { Prices } from '../components/Prices';
+import { useNavigate } from 'react-router-dom';
 const HomePage = () => {
 
   const [products, setProducts] = useState([]);
@@ -11,7 +12,7 @@ const HomePage = () => {
   const [radio, setRadio] = useState([]);
   const [total,setTotal]=useState(0);
   const [page,setPage]=useState(1);
-
+  const navigate =useNavigate();
   
 
   // Get all categories
@@ -128,7 +129,8 @@ const HomePage = () => {
                 <p className="card-text">{p.description.substring(0, 30)}</p>
                 <p className="card-text">$ {p.price}</p>
                 <div>
-                  <button className="btn btn-primary ms-1">More Details</button>
+                  <button className="btn btn-primary ms-1"
+                  onClick={()=>navigate(`/product/${p.slug}`)}>More Details</button>
                   <button className="btn btn-secondary ms-1">Add to Cart</button>
                 </div>
               </div>
