@@ -3,9 +3,10 @@ import { NavLink, Link } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import toast from "react-hot-toast";
 import SearchInput from "../Form/SearchInput";
-
+import useCategory from "../../hooks/useCategory";
 const Header = () => {
   const [auth, setAuth] = useAuth();
+  const categories = useCategory();
   const handleLogout = () => {
     setAuth({
       ...auth,
@@ -32,7 +33,7 @@ const Header = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
             <Link to="/" className="navbar-brand">
-              🛒 Ecommerce App
+              🛒 Localhive
             </Link>
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               <SearchInput></SearchInput>
@@ -41,11 +42,23 @@ const Header = () => {
                   Home
                 </NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink to="/category" className="nav-link ">
+              <li className="nav-item dropdown">
+                <Link className="nav-link dropdown-toggle" to={"/categories"} data-bs-toggle="dropdown" >
                   Category
-                </NavLink>
+                  
+                </Link>
+                <ul className="dropdown-menu">
+                  <li><Link className="dropdown-item" to={"/categories"}>All Categories</Link></li>
+                  {categories?.map(c => (
+                    <li key={c._id}>
+                      <Link className="dropdown-item" to={`/category/${c.slug}`}>{c.name}</Link>
+                      
+                    </li>
+                  ))}
+                </ul>
               </li>
+
+
               {!auth?.user ? (
                 <>
                   <li className="nav-item">
@@ -74,9 +87,8 @@ const Header = () => {
                     <ul className="dropdown-menu">
                       <li>
                         <NavLink
-                          to={`/dashboard/${
-                            auth?.user?.role === 1 ? "admin" : "user"
-                          }`}
+                          to={`/dashboard/${auth?.user?.role === 1 ? "admin" : "user"
+                            }`}
                           className="dropdown-item"
                         >
                           Dashboard
