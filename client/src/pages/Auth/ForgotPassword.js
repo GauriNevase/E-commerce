@@ -16,10 +16,10 @@ const ForgotPasssword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/v1/auth/forgot-password", {
+      const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/forgot-password`, {
         email,
-        newPassword,
         answer,
+        newPassword,
       });
       if (res && res.data.success) {
         toast.success(res.data && res.data.message);
@@ -57,7 +57,7 @@ const ForgotPasssword = () => {
               onChange={(e) => setAnswer(e.target.value)}
               className="form-control"
               id="exampleInputEmail1"
-              placeholder="Enter Your favorite Sport Name "
+              placeholder="Enter Your favorite colour "
               required
             />
           </div>
